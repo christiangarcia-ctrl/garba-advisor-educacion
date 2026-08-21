@@ -120,28 +120,33 @@ body{background:radial-gradient(ellipse 70% 50% at 15% -10%,rgba(10,22,40,.07),t
     <div style="text-align:center;margin-top:12px"><button class="btn-outline" onclick="mostrarEditorChips()">Ajustar mis respuestas</button></div>
   </div></div>
 
-  <div class="card" id="chipEditor"><div class="card-head"><h2>Antes de tus números, cuéntame qué hay detrás</h2><p>Elige las opciones que más se parezcan a su situación — puedes elegir varias en cada pregunta.</p></div><div class="card-body">
+  <div class="card" id="chipEditor"><div class="card-head"><h2>Antes de tus números, cuéntame qué hay detrás</h2><p>Elige la opción que más se parezca a su situación en cada pregunta.</p></div><div class="card-body">
     <div class="situ-progress" id="situProgress"><div class="situ-dot active"></div><div class="situ-dot"></div><div class="situ-dot"></div></div>
 
     <div class="situ-step active" data-situ="1">
-    <label class="reg-label">¿Qué te preocupa hoy sobre la educación de tu hijo/a?</label><div class="choice-hint">Elige de 1 a 3 frases que encajen con este momento.</div>
-    <div class="choice-grid multi-grid" id="chipsDolor"><button type="button" class="choice-btn" data-value="Quiero darle más oportunidades de las que yo tuve." onclick="toggleMulti('chipsDolor',this,3)">Darle más de lo que yo tuve</button><button type="button" class="choice-btn" data-value="Me da miedo no poder cubrir lo que necesite cuando llegue el momento." onclick="toggleMulti('chipsDolor',this,3)">Miedo a no poder cubrirlo</button><button type="button" class="choice-btn" data-value="Siento que el tiempo se me va a ir volando sin darme cuenta." onclick="toggleMulti('chipsDolor',this,3)">El tiempo se va a ir volando</button><button type="button" class="choice-btn" data-value="No quiero que el dinero sea la razón por la que no pueda estudiar lo que ama." onclick="toggleMulti('chipsDolor',this,3)">Que el dinero no limite su elección</button><button type="button" class="choice-btn" data-value="Es mi primer hijo/a y todo esto se siente nuevo para mí." onclick="toggleMulti('chipsDolor',this,3)">Todo esto se siente nuevo</button><button type="button" class="choice-btn" data-value="Tengo la intención de ahorrar, pero nunca aterrizo un plan concreto." onclick="toggleMulti('chipsDolor',this,3)">Tengo la intención, no el plan</button><button type="button" class="choice-btn" data-value="Quiero sentir que ya hice algo concreto por su futuro, no solo pensarlo." onclick="toggleMulti('chipsDolor',this,3)">Pasar de pensarlo a hacerlo</button><button type="button" class="choice-btn" data-value="Me preocupa que algo me pase a mí y su educación quede en riesgo." onclick="toggleMulti('chipsDolor',this,3)">Que su educación no dependa de mí</button></div>
-    <div class="err" id="situErr1">Elige al menos una opción para continuar.</div>
+    <label class="reg-label">¿Qué te preocupa hoy sobre la educación de tu hijo/a?</label><div class="choice-hint">Elige la que más encaje con este momento.</div>
+    <div class="choice-grid multi-grid" id="chipsDolor"><button type="button" class="choice-btn" data-value="Quiero darle más oportunidades de las que yo tuve." onclick="toggleMulti('chipsDolor',this,1)">Darle más de lo que yo tuve</button><button type="button" class="choice-btn" data-value="Me da miedo no poder cubrir lo que necesite cuando llegue el momento." onclick="toggleMulti('chipsDolor',this,1)">Miedo a no poder cubrirlo</button><button type="button" class="choice-btn" data-value="No quiero que el dinero sea la razón por la que no pueda estudiar lo que ama." onclick="toggleMulti('chipsDolor',this,1)">Que el dinero no limite su elección</button><button type="button" class="choice-btn" data-value="Me preocupa que algo me pase a mí y su educación quede en riesgo." onclick="toggleMulti('chipsDolor',this,1)">Que su educación no dependa de mí</button><button type="button" class="choice-btn" id="otroDolorBtn" data-value="" onclick="selectOther('chipsDolor',this,'otroDolorWrap','otroDolor')">Otro</button></div>
+    <div class="other-choice" id="otroDolorWrap" style="display:none;margin:-4px 0 4px"><input class="fi" type="text" id="otroDolor" placeholder="Cuéntame con tus palabras qué te preocupa" oninput="syncOtherInput($('otroDolorBtn'),'otroDolor')"/></div>
+    <div class="porque-inline" style="margin-top:14px"><label class="fl">¿Por qué te preocupa esto? <span style="text-transform:none;font-weight:600;color:var(--muted)">(opcional)</span></label><input class="fi" type="text" id="dolorPorque" placeholder="Ej. no quiero que le falte por no haber planeado a tiempo"/></div>
+    <div class="err" id="situErr1">Elige una opción para continuar.</div>
     <button class="btn-primary" onclick="situNext()">Siguiente →</button>
     </div>
 
     <div class="situ-step" data-situ="2">
-    <label class="reg-label">¿Por qué es importante empezar ahora?</label><div class="choice-hint">Elige de 1 a 3 frases que encajen con este momento.</div>
-    <div class="choice-grid multi-grid" id="chipsPorque"><button type="button" class="choice-btn" data-value="El tiempo para prepararme se acorta cada año que pasa." onclick="toggleMulti('chipsPorque',this,3)">El tiempo se acorta cada año</button><button type="button" class="choice-btn" data-value="No sé si mañana tendré la misma posibilidad que hoy." onclick="toggleMulti('chipsPorque',this,3)">Hoy sí puedo, no sé si mañana</button><button type="button" class="choice-btn" data-value="Hoy tengo ingresos y capacidad para comenzar." onclick="toggleMulti('chipsPorque',this,3)">Hoy tengo capacidad</button><button type="button" class="choice-btn" data-value="Quiero dejar de improvisar y tener una estrategia clara." onclick="toggleMulti('chipsPorque',this,3)">Dejar de improvisar</button><button type="button" class="choice-btn" data-value="Quiero dormir tranquilo/a sabiendo que ya hice algo por su futuro." onclick="toggleMulti('chipsPorque',this,3)">Dormir tranquilo/a con esto resuelto</button><button type="button" class="choice-btn" data-value="Sé que mientras más joven empiece, menor será la aportación mensual que necesitaré." onclick="toggleMulti('chipsPorque',this,3)">Aprovechar el tiempo</button></div>
-    <div class="err" id="situErr2">Elige al menos una opción para continuar.</div>
+    <label class="reg-label">¿Por qué es importante empezar ahora?</label><div class="choice-hint">Elige la que más encaje con este momento.</div>
+    <div class="choice-grid multi-grid" id="chipsPorque"><button type="button" class="choice-btn" data-value="Hoy tengo ingresos y capacidad para comenzar." onclick="toggleMulti('chipsPorque',this,1)">Hoy tengo capacidad</button><button type="button" class="choice-btn" data-value="Quiero dejar de improvisar y tener una estrategia clara." onclick="toggleMulti('chipsPorque',this,1)">Dejar de improvisar</button><button type="button" class="choice-btn" data-value="Sé que mientras más joven empiece, menor será la aportación mensual que necesitaré." onclick="toggleMulti('chipsPorque',this,1)">Aprovechar el tiempo</button><button type="button" class="choice-btn" data-value="Quiero dormir tranquilo/a sabiendo que ya hice algo por su futuro." onclick="toggleMulti('chipsPorque',this,1)">Dormir tranquilo/a con esto resuelto</button><button type="button" class="choice-btn" id="otroPorqueBtn" data-value="" onclick="selectOther('chipsPorque',this,'otroPorqueWrap','otroPorque')">Otro</button></div>
+    <div class="other-choice" id="otroPorqueWrap" style="display:none;margin:-4px 0 4px"><input class="fi" type="text" id="otroPorque" placeholder="Cuéntame con tus palabras por qué es importante ahora" oninput="syncOtherInput($('otroPorqueBtn'),'otroPorque')"/></div>
+    <div class="err" id="situErr2">Elige una opción para continuar.</div>
     <div class="situ-nav"><button class="btn-outline" onclick="situPrev()">← Atrás</button><button class="btn-primary" onclick="situNext()">Siguiente →</button></div>
     </div>
 
     <div class="situ-step" data-situ="3">
-    <label class="reg-label">¿Qué tendría que respetar esta estrategia para que de verdad te funcione?</label><div class="choice-hint">Elige de 1 a 3 frases que encajen con este momento.</div>
-    <div class="choice-grid multi-grid" id="chipsCondicion"><button type="button" class="choice-btn" data-value="Que el dinero esté ahí si mi hijo/a lo necesita antes de tiempo" onclick="toggleMulti('chipsCondicion',this,3)">Que esté ahí si lo necesita antes</button><button type="button" class="choice-btn" data-value="Que ese ahorro esté blindado, sin que nada más lo toque" onclick="toggleMulti('chipsCondicion',this,3)">Que esté blindado, solo para esto</button><button type="button" class="choice-btn" data-value="Aprovechar de forma eficiente los beneficios fiscales disponibles" onclick="toggleMulti('chipsCondicion',this,3)">Beneficio fiscal</button><button type="button" class="choice-btn" data-value="Que el dinero realmente crezca, no que solo esté guardado" onclick="toggleMulti('chipsCondicion',this,3)">Que crezca, no que solo esté guardado</button><button type="button" class="choice-btn" data-value="No arriesgar lo que ya tengo resuelto hoy" onclick="toggleMulti('chipsCondicion',this,3)">No arriesgar lo que ya tengo resuelto</button></div>
-    <div class="choice-grid multi-grid" id="chipsFreno"><button type="button" class="choice-btn" data-value="Sentí que había tiempo de sobra, que aún era muy pronto." onclick="toggleMulti('chipsFreno',this,3)">Sentí que aún era muy pronto</button><button type="button" class="choice-btn" data-value="Me abrumé con todo lo nuevo de ser papá/mamá y esto quedó en pausa." onclick="toggleMulti('chipsFreno',this,3)">Me abrumé con todo lo nuevo</button><button type="button" class="choice-btn" data-value="Me preocupaba comprometerme con algo poco flexible" onclick="toggleMulti('chipsFreno',this,3)">Temor a comprometerme</button><button type="button" class="choice-btn" data-value="Había priorizado otros gastos y proyectos" onclick="toggleMulti('chipsFreno',this,3)">Prioricé otros gastos</button><button type="button" class="choice-btn" data-value="No había encontrado una propuesta que respondiera realmente a mis objetivos" onclick="toggleMulti('chipsFreno',this,3)">No encontraba una propuesta adecuada</button><button type="button" class="choice-btn" data-value="Estuve a punto de contratar un plan, pero no lo concreté" onclick="toggleMulti('chipsFreno',this,3)">Estuve a punto de contratar uno</button></div>
-    <div class="err" id="situErr3">Elige al menos una opción en cada grupo para continuar.</div>
+    <label class="reg-label">¿Qué tendría que respetar esta estrategia para que de verdad te funcione?</label><div class="choice-hint">Elige la que más encaje con este momento.</div>
+    <div class="choice-grid multi-grid" id="chipsCondicion"><button type="button" class="choice-btn" data-value="Que el dinero esté ahí si mi hijo/a lo necesita antes de tiempo" onclick="toggleMulti('chipsCondicion',this,1)">Que esté ahí si lo necesita antes</button><button type="button" class="choice-btn" data-value="Que ese ahorro esté blindado, sin que nada más lo toque" onclick="toggleMulti('chipsCondicion',this,1)">Que esté blindado, solo para esto</button><button type="button" class="choice-btn" data-value="Aprovechar de forma eficiente los beneficios fiscales disponibles" onclick="toggleMulti('chipsCondicion',this,1)">Beneficio fiscal</button><button type="button" class="choice-btn" data-value="Que el dinero realmente crezca, no que solo esté guardado" onclick="toggleMulti('chipsCondicion',this,1)">Que crezca, no que solo esté guardado</button><button type="button" class="choice-btn" id="otroCondicionBtn" data-value="" onclick="selectOther('chipsCondicion',this,'otroCondicionWrap','otroCondicion')">Otro</button></div>
+    <div class="other-choice" id="otroCondicionWrap" style="display:none;margin:-4px 0 12px"><input class="fi" type="text" id="otroCondicion" placeholder="Cuéntame con tus palabras qué debe respetar tu estrategia" oninput="syncOtherInput($('otroCondicionBtn'),'otroCondicion')"/></div>
+    <div class="choice-grid multi-grid" id="chipsFreno"><button type="button" class="choice-btn" data-value="Me preocupaba comprometerme con algo poco flexible" onclick="toggleMulti('chipsFreno',this,1)">Temor a comprometerme</button><button type="button" class="choice-btn" data-value="Había priorizado otros gastos y proyectos" onclick="toggleMulti('chipsFreno',this,1)">Prioricé otros gastos</button><button type="button" class="choice-btn" data-value="No había encontrado una propuesta que respondiera realmente a mis objetivos" onclick="toggleMulti('chipsFreno',this,1)">No encontraba una propuesta adecuada</button><button type="button" class="choice-btn" data-value="Estuve a punto de contratar un plan, pero no lo concreté" onclick="toggleMulti('chipsFreno',this,1)">Estuve a punto de contratar uno</button><button type="button" class="choice-btn" id="otroFrenoBtn" data-value="" onclick="selectOther('chipsFreno',this,'otroFrenoWrap','otroFreno')">Otro</button></div>
+    <div class="other-choice" id="otroFrenoWrap" style="display:none;margin:-4px 0 4px"><input class="fi" type="text" id="otroFreno" placeholder="Cuéntame con tus palabras qué te ha frenado" oninput="syncOtherInput($('otroFrenoBtn'),'otroFreno')"/></div>
+    <div class="err" id="situErr3">Elige una opción en cada grupo para continuar.</div>
     <div class="situ-nav"><button class="btn-outline" onclick="situPrev()">← Atrás</button><button class="res-trigger" type="button" onclick="buildSlides();$('resPanel').classList.add('show')">📚 Recursos de apoyo</button><button class="btn-primary" onclick="goDatos()">Continuar con sus datos →</button></div>
     </div>
   </div></div>
@@ -363,9 +368,11 @@ function getParams(){
     g:p.get('g')||'',
     pm:p.get('p')||'',
     t:p.get('t')?decodeURIComponent(p.get('t')):'',
-    do_:splitList('do'),me:splitList('me'),po:splitList('po'),co:splitList('co'),fr:splitList('fr')
+    do_:splitList('do'),me:splitList('me'),po:splitList('po'),co:splitList('co'),fr:splitList('fr'),
+    pq:p.get('pq')?decodeURIComponent(p.get('pq')):''
   };
 }
+const OTRO_MAP={chipsDolor:{wrap:'otroDolorWrap',input:'otroDolor',btn:'otroDolorBtn'},chipsPorque:{wrap:'otroPorqueWrap',input:'otroPorque',btn:'otroPorqueBtn'},chipsCondicion:{wrap:'otroCondicionWrap',input:'otroCondicion',btn:'otroCondicionBtn'},chipsFreno:{wrap:'otroFrenoWrap',input:'otroFreno',btn:'otroFrenoBtn'}};
 let HYDRATED=null;
 function hidratar(){
   const q=getParams();
@@ -379,11 +386,14 @@ function hidratar(){
   if(q.g){$('metaHoy').value=Number(q.g).toLocaleString('es-MX')}
   if(q.pm){$('pmt').value=Number(q.pm).toLocaleString('es-MX');userEditedPMT=true}
   if(q.t) $('wanum').value=q.t;
+  if(q.pq && $('dolorPorque')) $('dolorPorque').value=q.pq;
   ['chipsDolor','chipsPorque','chipsCondicion','chipsFreno'].forEach(gid=>{
     const map={chipsDolor:q.do_,chipsPorque:q.po,chipsCondicion:q.co,chipsFreno:q.fr};
     (map[gid]||[]).forEach(val=>{
       const btn=$(gid).querySelector(`button[data-value="${CSS.escape(val)}"]`);
-      if(btn) btn.classList.add('sel');
+      if(btn){btn.classList.add('sel');return}
+      const o=OTRO_MAP[gid];
+      if(o && $(o.input)){$(o.input).value=val;$(o.wrap).style.display='block';syncOtherInput($(o.btn),o.input)}
     });
   });
   actualizarPlazoHint();
@@ -392,7 +402,7 @@ function hidratar(){
 function mostrarRecap(q){
   const pills=[];
   ['chipsDolor','chipsPorque','chipsCondicion','chipsFreno'].forEach(gid=>{
-    $(gid).querySelectorAll('.choice-btn.sel').forEach(b=>pills.push(b.textContent.trim()));
+    $(gid).querySelectorAll('.choice-btn.sel').forEach(b=>pills.push(b.id.startsWith('otro')?b.dataset.value:b.textContent.trim()));
   });
   if(q.h) pills.unshift('Hijo/a: '+q.h);
   if(q.g) pills.push('Meta: '+money(q.g));
@@ -400,12 +410,14 @@ function mostrarRecap(q){
   $('recapPills').innerHTML=pills.map(t=>`<span class="pill">${t}</span>`).join('');
   $('recapBlock').style.display='block';
   $('chipEditor').style.display='none';
-  $('ctxLead').textContent='Ya nos compartiste esto antes de la sesión — vamos directo a construir su plan.';
+  $('ctxLead').textContent=`Ya nos compartiste esto antes de la sesión — vamos directo a construir el plan de ${q.h||'tu hijo/a'}.`;
 }
 function mostrarEditorChips(){$('recapBlock').style.display='none';$('chipEditor').style.display='block'}
 
 // ---- Chip flow ----
-function toggleMulti(groupId,btn,max){const group=$(groupId);const selected=group.querySelectorAll('.choice-btn.sel');if(!btn.classList.contains('sel')&&selected.length>=max)return;btn.classList.toggle('sel');const err=group.closest('.situ-step')?.querySelector('.err');if(err)err.classList.remove('vis')}
+function toggleMulti(groupId,btn,max){const group=$(groupId);if(max===1){group.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');const wrap=group.nextElementSibling;if(wrap&&wrap.classList.contains('other-choice')&&!btn.id.startsWith('otro'))wrap.style.display='none'}else{const selected=group.querySelectorAll('.choice-btn.sel');if(!btn.classList.contains('sel')&&selected.length>=max)return;btn.classList.toggle('sel')}const err=group.closest('.situ-step')?.querySelector('.err');if(err)err.classList.remove('vis')}
+function selectOther(groupId,btn,wrapId,inputId){const group=$(groupId);group.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('sel'));$(wrapId).style.display='block';$(inputId).focus();const err=group.closest('.situ-step')?.querySelector('.err');if(err)err.classList.remove('vis')}
+function syncOtherInput(btn,inputId){const v=$(inputId).value.trim();btn.dataset.value=v;btn.classList.toggle('sel',!!v)}
 function getSelected(groupId){return [...$(groupId).querySelectorAll('.choice-btn.sel')].map(b=>b.dataset.value)}
 let situStep=1;
 function situValid(n){
