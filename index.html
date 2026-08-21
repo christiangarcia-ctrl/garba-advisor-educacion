@@ -73,6 +73,35 @@ body{background:radial-gradient(ellipse 70% 50% at 15% -10%,rgba(10,22,40,.07),t
   .tbl-body-collapsed{display:block!important;margin-top:0!important}
   .chart-card,.tbl-card,.metrics,.secondary-grid,.fiscal-block{page-break-inside:avoid}
 }
+.res-trigger{border:1.5px solid var(--accent);background:var(--accent-soft);color:#8a6112;border-radius:12px;padding:12px 18px;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.2s}
+.res-trigger:hover{background:#fdedcf}
+.res-panel{position:fixed;inset:0;display:none;place-items:center;background:rgba(8,15,28,.6);backdrop-filter:blur(6px);z-index:999997;padding:20px}
+.res-panel.show{display:grid}
+.res-panel-card{position:relative;width:min(720px,94vw);max-height:88vh;overflow-y:auto;padding:30px;border-radius:22px;background:#fff;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.res-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--text);font-size:15px;cursor:pointer;line-height:1}
+.res-kicker{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:var(--soft);border:1px solid #c4d7f5;border-radius:999px;padding:5px 14px;margin-bottom:12px}
+.res-panel-card h2{font-family:'Playfair Display',serif;font-size:21px;color:var(--navy);margin-bottom:6px}
+.res-panel-card>p{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:18px}
+.res-mode{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.res-mode button{border:1.5px solid var(--border);background:#fff;border-radius:14px;padding:13px 15px;text-align:left;cursor:pointer;transition:.2s;font-family:inherit}
+.res-mode button strong{display:block;color:var(--navy);font-size:12px;margin-bottom:4px}
+.res-mode button span{display:block;color:var(--muted);font-size:10px;line-height:1.4}
+.res-mode button.active{border-color:var(--blue);background:linear-gradient(145deg,#edf7ff,#f8fffc);box-shadow:0 10px 25px rgba(35,97,176,.12)}
+.res-status{display:flex;justify-content:space-between;align-items:center;margin:0 3px 8px;color:var(--muted);font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.res-status b{color:var(--blue)}
+.res-frame{background:var(--navy);border-radius:18px;padding:10px;box-shadow:0 18px 45px rgba(13,27,42,.2)}
+.res-frame img{width:100%;display:block;border-radius:10px;aspect-ratio:16/9;object-fit:contain;background:#fff}
+.res-img-in{animation:resImgIn .38s ease}
+@keyframes resImgIn{from{opacity:.2;transform:scale(.992);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+.res-meta{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:12px}
+.res-meta-copy strong{display:block;color:var(--navy);font-size:14px;margin-bottom:3px}
+.res-meta-copy span{font-size:11px;color:var(--muted)}
+.res-nav{display:flex;gap:8px}
+.res-nav button{border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:800;color:var(--blue);cursor:pointer;font-family:inherit}
+.res-dots{display:flex;gap:5px;margin-top:10px}
+.res-dot{width:20px;height:4px;border-radius:9px;background:var(--border)}
+.res-dot.active{background:var(--blue)}
+@media(max-width:600px){.res-mode{grid-template-columns:1fr}.res-meta{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -113,10 +142,30 @@ body{background:radial-gradient(ellipse 70% 50% at 15% -10%,rgba(10,22,40,.07),t
     <div class="choice-grid multi-grid" id="chipsCondicion"><button type="button" class="choice-btn" data-value="Que el dinero esté ahí si mi hijo/a lo necesita antes de tiempo" onclick="toggleMulti('chipsCondicion',this,3)">Que esté ahí si lo necesita antes</button><button type="button" class="choice-btn" data-value="Que ese ahorro esté blindado, sin que nada más lo toque" onclick="toggleMulti('chipsCondicion',this,3)">Que esté blindado, solo para esto</button><button type="button" class="choice-btn" data-value="Aprovechar de forma eficiente los beneficios fiscales disponibles" onclick="toggleMulti('chipsCondicion',this,3)">Beneficio fiscal</button><button type="button" class="choice-btn" data-value="Que el dinero realmente crezca, no que solo esté guardado" onclick="toggleMulti('chipsCondicion',this,3)">Que crezca, no que solo esté guardado</button><button type="button" class="choice-btn" data-value="No arriesgar lo que ya tengo resuelto hoy" onclick="toggleMulti('chipsCondicion',this,3)">No arriesgar lo que ya tengo resuelto</button></div>
     <div class="choice-grid multi-grid" id="chipsFreno"><button type="button" class="choice-btn" data-value="Sentí que había tiempo de sobra, que aún era muy pronto." onclick="toggleMulti('chipsFreno',this,3)">Sentí que aún era muy pronto</button><button type="button" class="choice-btn" data-value="Me abrumé con todo lo nuevo de ser papá/mamá y esto quedó en pausa." onclick="toggleMulti('chipsFreno',this,3)">Me abrumé con todo lo nuevo</button><button type="button" class="choice-btn" data-value="Me preocupaba comprometerme con algo poco flexible" onclick="toggleMulti('chipsFreno',this,3)">Temor a comprometerme</button><button type="button" class="choice-btn" data-value="Había priorizado otros gastos y proyectos" onclick="toggleMulti('chipsFreno',this,3)">Prioricé otros gastos</button><button type="button" class="choice-btn" data-value="No había encontrado una propuesta que respondiera realmente a mis objetivos" onclick="toggleMulti('chipsFreno',this,3)">No encontraba una propuesta adecuada</button><button type="button" class="choice-btn" data-value="Estuve a punto de contratar un plan, pero no lo concreté" onclick="toggleMulti('chipsFreno',this,3)">Estuve a punto de contratar uno</button></div>
     <div class="err" id="situErr3">Elige al menos una opción en cada grupo para continuar.</div>
-    <div class="situ-nav"><button class="btn-outline" onclick="situPrev()">← Atrás</button><button class="btn-primary" onclick="goDatos()">Continuar con sus datos →</button></div>
+    <div class="situ-nav"><button class="btn-outline" onclick="situPrev()">← Atrás</button><button class="res-trigger" type="button" onclick="buildSlides();$('resPanel').classList.add('show')">📚 Recursos de apoyo</button><button class="btn-primary" onclick="goDatos()">Continuar con sus datos →</button></div>
     </div>
   </div></div>
 </div></div>
+
+<div class="res-panel" id="resPanel">
+<div class="res-panel-card">
+<button class="res-close" id="resClose" type="button">✕</button>
+<div class="res-kicker">Recursos de apoyo</div>
+<h2>Revisemos solo lo que aporte valor a esta conversación.</h2>
+<p>Seleccionamos los recursos más relacionados con lo que compartiste. Si quieres ver algo adicional, también puedes abrir la biblioteca completa.</p>
+<div class="res-mode">
+<button class="active" id="resRelated" type="button"><strong>Ver diapositivas relacionadas</strong><span>Solo los recursos elegidos para este caso.</span></button>
+<button id="resAll" type="button"><strong>Ver material completo</strong><span>Las 10 diapositivas de OptiMaxx educación.</span></button>
+</div>
+<div class="res-status"><span id="resModeLabel">Selección personalizada</span><b id="resCountLabel">—</b></div>
+<div class="res-frame"><img alt="Presentación adaptativa" id="resImage"/></div>
+<div class="res-meta">
+<div class="res-meta-copy"><strong id="resTitle"></strong><span id="resReason"></span></div>
+<div class="res-nav"><button id="resPrev" type="button">←</button><button id="resNext" type="button">→</button></div>
+</div>
+<div class="res-dots" id="resDots"></div>
+</div>
+</div>
 
 <div class="view" id="vDatos"><div class="wrap">
   <div class="stepper"><div class="step-item"><div class="step-num done">✓</div><div class="step-label">Contexto</div></div><div class="step-line"></div><div class="step-item"><div class="step-num active">2</div><div class="step-label active">Su meta</div></div><div class="step-line"></div><div class="step-item"><div class="step-num">3</div><div class="step-label">Resultado</div></div></div>
@@ -566,6 +615,69 @@ function dibujarChart(labels,data,metaLinea){
   </svg>`;
   $('chartWrap').innerHTML=svg;
 }
+
+const slidesData={
+  1:{src:"images/edu-slide-01.jpg",title:"Tu futuro empieza hoy",reason:"Abre la conversación desde el propósito, no desde el producto."},
+  2:{src:"images/edu-slide-02.jpg",title:"La realidad del costo educativo en México",reason:"Ancla la urgencia con datos concretos, no con opiniones."},
+  3:{src:"images/edu-slide-03.jpg",title:"Así funciona tu plan, en simple",reason:"Resuelve dudas de estructura, transparencia y respaldo legal."},
+  4:{src:"images/edu-slide-04.jpg",title:"Los 4 pilares de tu plan",reason:"Panorama general: beneficio fiscal, bono, inversión y flexibilidad."},
+  5:{src:"images/edu-slide-05.jpg",title:"Compromiso y flexibilidad, en una línea de tiempo",reason:"Aclara qué esperar en los primeros 18 meses y después."},
+  6:{src:"images/edu-slide-06.jpg",title:"Así usas el fondo cuando llegue el momento",reason:"Responde 'cómo saco el dinero' antes de que lo pregunten."},
+  7:{src:"images/edu-slide-07.jpg",title:"¿Qué pasa si mis ingresos se detienen?",reason:"Resuelve el miedo a comprometerse sin salida."},
+  8:{src:"images/edu-slide-08.jpg",title:"Transparencia total: qué pasa en cada escenario",reason:"Cubre becas, sobrante y cancelación con reglas claras."},
+  9:{src:"images/edu-slide-09.jpg",title:"Protegiendo el plan, pase lo que pase",reason:"Responde qué pasa si el titular falta o queda inválido."},
+  10:{src:"images/edu-slide-10.jpg",title:"Así empiezan a construir su futuro hoy",reason:"Puente hacia el cierre: requisitos y pasos concretos."}
+};
+let resMode='related',resList=[],resIdx=0,resRelatedList=[1];
+function selectedChipText(){
+  return ['chipsDolor','chipsPorque','chipsCondicion','chipsFreno']
+    .map(g=>Array.from($(g).querySelectorAll('.choice-btn.sel')).map(b=>b.dataset.value).join(' '))
+    .join(' ').toLowerCase();
+}
+function buildSlides(){
+  let ids=[1];
+  const c=selectedChipText();
+  if(c.match(/miedo|cubrir lo que necesite|no arriesgar/))ids.push(2,8);
+  if(c.match(/tiempo|acorta|pronto|joven|volando/))ids.push(5);
+  if(c.match(/dinero sea la razón|limite su elección/))ids.push(2);
+  if(c.match(/primer hijo|abrum|nuevo para mí/))ids.push(3);
+  if(c.match(/no aterrizo|improvisar|estrategia clara|hice algo concreto/))ids.push(4,10);
+  if(c.match(/me pase a mí|inválid|no dependa de mí/))ids.push(9);
+  if(c.match(/antes de tiempo|blindado|comprometerme|poco flexible/))ids.push(6,7);
+  if(c.match(/beneficios fiscales/))ids.push(3,6);
+  if(c.match(/realmente crezca|solo guardado/))ids.push(4);
+  if(c.match(/otros gastos|proyectos|no había encontrado|a punto de contratar/))ids.push(4,10);
+  resRelatedList=[...new Set(ids)].slice(0,6);
+  setResMode('related');
+}
+function allSlideIds(){return Object.keys(slidesData).map(Number).sort((a,b)=>a-b)}
+function setResMode(mode){
+  resMode=mode;
+  resList=mode==='all'?allSlideIds():resRelatedList.slice();
+  resIdx=0;
+  $('resRelated').classList.toggle('active',mode==='related');
+  $('resAll').classList.toggle('active',mode==='all');
+  $('resModeLabel').textContent=mode==='related'?'Selección personalizada':'Biblioteca completa';
+  renderResSlide();
+}
+function renderResSlide(){
+  if(!resList.length)return;
+  const d=slidesData[resList[resIdx]];
+  $('resImage').classList.remove('res-img-in');
+  requestAnimationFrame(()=>{
+    $('resImage').src=d.src;
+    $('resTitle').textContent=d.title;
+    $('resReason').textContent=d.reason;
+    $('resCountLabel').textContent=`${resIdx+1} de ${resList.length}`;
+    $('resDots').innerHTML=resList.map((_,i)=>`<span class="res-dot ${i===resIdx?'active':''}"></span>`).join('');
+    $('resImage').classList.add('res-img-in');
+  });
+}
+$('resRelated').onclick=()=>setResMode('related');
+$('resAll').onclick=()=>setResMode('all');
+$('resPrev').onclick=()=>{resIdx=(resIdx-1+resList.length)%resList.length;renderResSlide()};
+$('resNext').onclick=()=>{resIdx=(resIdx+1)%resList.length;renderResSlide()};
+$('resClose').onclick=()=>$('resPanel').classList.remove('show');
 
 document.addEventListener('DOMContentLoaded',hidratar);
 </script>
