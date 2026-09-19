@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta name="referrer" content="no-referrer"/>
+<script>window.GARBA_ACCESS_CONFIG={"product":"educacion","role":"advisor","api":"https://mi-tracker-seguros.vercel.app/api/pdp-session"};</script>
+<script src="pdp-access.js"></script>
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex,nofollow"/>
@@ -208,7 +212,7 @@ body{background:radial-gradient(ellipse 70% 50% at 15% -10%,rgba(10,22,40,.07),t
     <div class="check-row"><input type="checkbox" id="incluirBono" checked/><label for="incluirBono">Incluir el <strong>Bono de Fidelidad</strong> de Allianz en la proyección (según tabla oficial vigente, sujeta a cumplir el esquema comprometido)</label></div>
 
     <div class="grid2">
-      <div><label class="fl">WhatsApp de contacto</label><input class="fi" type="tel" id="wanum" maxlength="10" inputmode="numeric" placeholder="Ej. 6622001122"/></div>
+      <div><label class="fl">WhatsApp de contacto</label><input class="fi" type="tel" id="wanum" maxlength="16" inputmode="numeric" placeholder="Ej. 6622001122"/></div>
     </div>
     <div class="err" id="errDatos">Completa el nombre y edad del hijo/a, la edad meta (18 o 22), la meta de ahorro y la aportación mensual.</div>
     <div style="display:flex;gap:10px;margin-top:8px;"><button class="btn-outline" onclick="goContexto()">← Regresar</button><button class="btn-primary" onclick="abrirConfirmPlazo()">Ver la proyección →</button></div>
@@ -358,6 +362,7 @@ function deselUniversidad(){
 
 // ---- URL hydration ----
 function getParams(){
+  if(window.garbaAdvisorContext)return window.garbaAdvisorContext;
   const p=new URLSearchParams(window.location.search);
   const splitList=k=>{const v=p.get(k);return v?decodeURIComponent(v).split('|').filter(Boolean):[]};
   return{
@@ -400,14 +405,14 @@ function hidratar(){
   mostrarRecap(q);
 }
 function mostrarRecap(q){
-  const pills=[];
+  const pills=[...(q.me||[])];
   ['chipsDolor','chipsPorque','chipsCondicion','chipsFreno'].forEach(gid=>{
     $(gid).querySelectorAll('.choice-btn.sel').forEach(b=>pills.push(b.id.startsWith('otro')?b.dataset.value:b.textContent.trim()));
   });
   if(q.h) pills.unshift('Hijo/a: '+q.h);
   if(q.g) pills.push('Meta: '+money(q.g));
   if(!pills.length) return;
-  $('recapPills').innerHTML=pills.map(t=>`<span class="pill">${t}</span>`).join('');
+  $('recapPills').replaceChildren(...pills.map(t=>{const e=document.createElement('span');e.className='pill';e.textContent=t;return e}));
   $('recapBlock').style.display='block';
   $('chipEditor').style.display='none';
   $('ctxLead').textContent=`Ya nos compartiste esto antes de la sesión — vamos directo a construir el plan de ${q.h||'tu hijo/a'}.`;
@@ -691,7 +696,14 @@ $('resPrev').onclick=()=>{resIdx=(resIdx-1+resList.length)%resList.length;render
 $('resNext').onclick=()=>{resIdx=(resIdx+1)%resList.length;renderResSlide()};
 $('resClose').onclick=()=>$('resPanel').classList.remove('show');
 
-document.addEventListener('DOMContentLoaded',hidratar);
+window.garbaHydrateAdvisor=function(d){
+ window.garbaAdvisorContext={n:d.nom||'',h:d.nombreHijo||'',e:String(d.edadHijo??''),m:String(d.edadMeta??''),g:String(d.des??''),pm:String(d.ahorro??''),t:d.wa||'',do_:d.dolor||[],me:d.meta||[],po:d.porque||[],co:d.condicion||[],fr:d.freno||[],pq:d.dolorPorque||''};
+ hidratar();
+ if(d.wa)$('aperturaTelefono').value=d.wa;
+ if(d.correo)$('aperturaCorreo').value=d.correo;
+ if(d.fechaNacimiento)$('aperturaNacimiento').value=d.fechaNacimiento;
+};
+if(!window.garbaIdentified)document.addEventListener('DOMContentLoaded',hidratar);
 </script>
 </body>
 </html>
